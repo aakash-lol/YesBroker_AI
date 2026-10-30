@@ -1,9 +1,10 @@
 node_modules
 .next
+.env.example
 .env
+/03_qdrant_sync.py
 .env.local
 .env.*.local
 !.env.example
 *.log
-
 tsconfig.tsbuildinfo
