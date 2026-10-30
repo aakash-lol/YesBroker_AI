@@ -1,8 +1,10 @@
 # YesBroker — AI Estate OS
 
-YesBroker is an AI-first real estate operating system built with Next.js and connected to a real backend stack including Supabase, Vapi, n8n, Gemini, Qdrant, and Twilio.
+YesBroker is an AI-first real estate operating system built with Next.js and connected to a backend stack including Supabase, Vapi, n8n, Gemini, Qdrant, and Twilio.
 
 The application provides a real-estate marketplace, property discovery, AI voice assistance, negotiation, CRM, analytics, site-visit management, WhatsApp integration, and related dashboards.
+
+Built and maintained by [Aakash Tutlani](https://github.com/aakash-lol).
 
 ## Tech Stack
 
@@ -38,63 +40,45 @@ You also need access to the required external services and credentials:
 
 ## 2. Clone the Project
 
-Clone the repository:
-
 ```bash
-git clone https://github.com/karthik-varma06/YesBroker_AI.git
-```
-
-Enter the project:
-
-```bash
-cd YesBroker_AI.git
-```
-
-Install dependencies:
-
-```bash
+git clone https://github.com/aakash-lol/YesBroker_AI.git
+cd YesBroker_AI
 npm install
 ```
 
 ## 3. Configure Environment Variables
 
-The repository contains:
+The repository contains `.env.example`, which lists the required variable names only (no values).
 
-```text
-.env.example
+Create your local environment file from it.
+
+**macOS / Linux**
+
+```bash
+cp .env.example .env.local
 ```
 
-This file contains the required environment variable names only.
-
-Create your local environment file from the example.
-
-### Windows PowerShell
+**Windows PowerShell**
 
 ```powershell
 Copy-Item .env.example .env.local
 ```
 
-## 4. Run the Application
+Then fill in your own keys in `.env.local`. Never commit this file.
 
-Start the development server:
+> Variables starting with `NEXT_PUBLIC_` are exposed to the browser. Keep secret keys (Supabase service role, Gemini, Qdrant, Twilio, n8n webhook) server-side only.
+
+## 4. Run the Application
 
 ```bash
 npm run dev
 ```
 
-Open:
+Open [http://localhost:3000](http://localhost:3000).
 
-```text
-http://localhost:3000
-```
+## 5. AI Voice Agent
 
-## 7. AI Voice Agent
-
-Open:
-
-```text
-http://localhost:3000/voice-agent
-```
+Open [http://localhost:3000/voice-agent](http://localhost:3000/voice-agent).
 
 The voice agent uses Vapi and connects to backend automation through n8n.
 
@@ -109,7 +93,7 @@ The voice flow supports:
 - Human handoff
 - Conversation completion
 
-## 8. Voice Agent Test Script
+## 6. Voice Agent Test Script
 
 Use a fresh voice call and test the following scenarios.
 
@@ -117,11 +101,9 @@ Use a fresh voice call and test the following scenarios.
 
 Say:
 
-> Hi, my name is Karthikeya. I'm looking for a 2BHK apartment in Whitefield, Bangalore with a budget of 85 lakhs and I will require a home loan.
+> Hi, my name is Aakash. I'm looking for a 2BHK apartment in Whitefield, Bangalore with a budget of 85 lakhs and I will require a home loan.
 
-Expected:
-
-The agent should understand the requirement and collect the necessary contact information.
+Expected: the agent understands the requirement and collects the necessary contact information.
 
 ### Test 2 — Property Search
 
@@ -129,9 +111,7 @@ Say:
 
 > Can you show me the best properties available in Whitefield within my budget and tell me their amenities?
 
-Expected:
-
-The agent should retrieve real property options through the property-search workflow and provide their relevant details and amenities.
+Expected: the agent retrieves property options through the property-search workflow and provides their details and amenities.
 
 ### Test 3 — Price Negotiation
 
@@ -139,9 +119,7 @@ Say:
 
 > I like the property, but instead of 85 lakhs I can only offer 78 lakhs. Is there any flexibility in the price?
 
-Expected:
-
-The agent should process the negotiation request through the negotiation workflow.
+Expected: the agent processes the request through the negotiation workflow.
 
 ### Test 4 — Site Visit
 
@@ -149,9 +127,7 @@ Say:
 
 > That sounds reasonable. I'd like to schedule a site visit on June 25th at 11:00 AM.
 
-Expected:
-
-The agent should process the site-visit request and collect any information required for booking.
+Expected: the agent processes the site-visit request and collects any information required for booking.
 
 ### Test 5 — Human Handoff
 
@@ -159,9 +135,7 @@ Say:
 
 > Before I decide, I'd like to speak with a senior property consultant directly.
 
-Expected:
-
-The agent should trigger the human handoff flow.
+Expected: the agent triggers the human handoff flow.
 
 ### Test 6 — End Conversation
 
@@ -169,13 +143,9 @@ Say:
 
 > Thank you for all the information. That's all I needed today.
 
-Expected:
+Expected: the agent ends the conversation normally.
 
-The agent should end the conversation normally.
-
-## 9. Backend Architecture
-
-The main architecture is:
+## 7. Backend Architecture
 
 ```text
 Next.js Application
@@ -201,35 +171,16 @@ Next.js Application
 
 The frontend, external services, and automation workflows work together as one system.
 
-## 10. Property Data and Qdrant
+## 8. Property Data and Qdrant
 
-Property data is stored in Supabase.
-
-The Qdrant collection used for property retrieval is:
+Property data is stored in Supabase. Vector property search uses a Qdrant collection named:
 
 ```text
 real_estate_kb
 ```
 
-The project contains:
+Properties are embedded with Gemini (`gemini-embedding-001`, 768 dimensions) and synced from Supabase into Qdrant. The sync script is kept out of this public repository, so set up the collection separately with the same embedding settings.
 
-```text
-03_qdrant_sync.py
-```
+## Author
 
-This script synchronizes property data from Supabase into Qdrant.
-
-Run it only when the property knowledge base needs to be synchronized:
-
-```bash
-python 03_qdrant_sync.py
-```
-
-
-
-
-
-
-
-
-
+**Aakash Tutlani** — [GitHub](https://github.com/aakash-lol) · [Portfolio](https://www.aakashtutlani.me/)
