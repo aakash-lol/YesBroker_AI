@@ -1,21 +1,18 @@
 import { NextResponse } from 'next/server';
-import { getServiceClient } from '@/lib/supabase';
+import { query } from '@/lib/db';
+import { requireAdmin } from '@/lib/auth';
 import { mapNegotiationLog } from '@/lib/mappers';
+import type { NegotiationLog } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
 
-/** GET /api/negotiations — negotiation_logs from n8n voice agent */
+/** GET /api/negotiations (admin only) */
 export async function GET() {
+  const denied = await requireAdmin();
+  if (denied) return denied;
   try {
-    const supabase = getServiceClient();
-    const { data, error } = await supabase
-      .from('negotiation_logs')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(100);
-
-    if (error) throw error;
-    return NextResponse.json((data ?? []).map(mapNegotiationLog));
+    const rows = await query<NegotiationLog>('SELECT * FROM negotiation_logs ORDER BY created_at DESC LIMIT 100');
+    return NextResponse.json(rows.map(mapNegotiationLog));
   } catch (e) {
     console.error('[/api/negotiations]', e);
     return NextResponse.json([]);

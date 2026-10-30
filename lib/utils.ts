@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatPrice(price: number, currency = 'INR') {
-  // Supabase stores absolute INR (8500000 = ₹85 Lakhs)
+  // DB stores absolute INR (8500000 = ₹85 Lakhs)
   if (currency === 'INR' || currency === '₹') {
     if (price >= 10_000_000) return `₹${(price / 10_000_000).toFixed(2)} Cr`;
     if (price >= 100_000) return `₹${(price / 100_000).toFixed(price % 100_000 === 0 ? 0 : 1)} Lakhs`;

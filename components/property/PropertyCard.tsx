@@ -90,7 +90,7 @@ export default function PropertyCard({
   className = "",
 }: PropertyCardProps) {
   const [imgError, setImgError] = useState(false);
-  const imgSrc = !imgError ? getPropertyImage(property.title) : null;
+  const imgSrc = !imgError ? (property.image_url || getPropertyImage(property.title)) : null;
   const bhk = extractBHK(property.property_type);
 
   return (
@@ -130,6 +130,7 @@ export default function PropertyCard({
           <>
             <Image
               src={imgSrc}
+              unoptimized={imgSrc.startsWith("http")}
               alt={property.title}
               fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -299,9 +300,6 @@ export default function PropertyCard({
               style={{ color: "var(--text-muted)" }}
             >
               Est. EMI {formatEMI(property.price)}
-              {property.minimum_price && !compact && (
-                <span> · Floor {formatPrice(property.minimum_price)}</span>
-              )}
             </p>
           </div>
 

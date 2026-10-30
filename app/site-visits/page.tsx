@@ -319,7 +319,7 @@ export default function SiteVisitsPage() {
             className="text-center py-20 text-sm"
             style={{ color: "var(--text-muted)" }}
           >
-            Loading visits from Supabase…
+            Loading visits…
           </div>
         ) : visits.length === 0 ? (
           <div

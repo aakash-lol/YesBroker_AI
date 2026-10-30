@@ -640,7 +640,7 @@ export default function HomePage() {
                 <Building2 className="w-8 h-8 md:w-9 md:h-9 opacity-50" style={{ color: "#6366F1" }} />
               </div>
               <p className="text-xs md:text-sm" style={{ color: "var(--text-muted)" }}>
-                No properties found. Add properties via Supabase or the n8n workflow.
+                No properties listed yet. Please check back soon.
               </p>
             </motion.div>
           ) : (

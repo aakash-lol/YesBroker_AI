@@ -100,7 +100,7 @@ export default function NegotiationPage() {
   const [history, setHistory] = useState<UINegotiationRound[]>([]);
 
   useEffect(() => {
-    fetch("/api/properties", { cache: "no-store" })
+    fetch("/api/admin/properties?format=ui", { cache: "no-store" })
       .then((r) => r.json())
       .then((d: UIProperty[]) => {
         if (Array.isArray(d) && d.length) {
@@ -154,7 +154,7 @@ export default function NegotiationPage() {
         className="min-h-screen pt-20 px-4 flex items-center justify-center"
         style={{ color: "var(--text-muted)" }}
       >
-        Loading properties from Supabase…
+        Loading properties…
       </div>
     );
   }
@@ -178,7 +178,7 @@ export default function NegotiationPage() {
             Negotiation <span className="text-gradient-sapphire">Engine</span>
           </h1>
           <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-            Uses seller_price &amp; minimum_price from Supabase — same logic as
+            Uses seller_price &amp; minimum_price from the database — same logic as
             voice agent negotiatePrice tool.
           </p>
         </motion.div>
@@ -562,7 +562,7 @@ export default function NegotiationPage() {
                     className="text-sm font-semibold"
                     style={{ color: "var(--text-primary)" }}
                   >
-                    Negotiation Timeline (from Supabase)
+                    Negotiation Timeline
                   </h3>
                 </div>
                 <div className="max-h-64 overflow-y-auto">

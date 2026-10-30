@@ -468,7 +468,7 @@ export default function VoiceAgentPage() {
   const [callState, setCallState] = useState<CallState>("idle");
   const [duration, setDuration] = useState(0);
   const [bubbles, setBubbles] = useState<Bubble[]>(DEMO_BUBBLES);
-  const [callLogs, setCallLogs] = useState<CallLog[]>(DEMO_CALLS);
+  const [callLogs, setCallLogs] = useState<CallLog[]>([]);
   const [isLoadingLogs, setIsLoadingLogs] = useState(false);
   const [vapiError, setVapiError] = useState("");
   const [isSpeaking, setIsSpeaking] = useState(false);

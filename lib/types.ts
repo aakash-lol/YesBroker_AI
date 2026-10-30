@@ -1,18 +1,4 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder';
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
-/** Server-side only – uses the service role key (bypasses RLS) */
-export function getServiceClient(): SupabaseClient {
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!serviceKey) return supabase;
-  return createClient(supabaseUrl, serviceKey);
-}
-
-// ─── Types matching supabase schema.json + n8n workflow ───────────────────
+// Row types (replaces the type exports that lived in lib/supabase.ts)
 
 export type Lead = {
   id: string;
@@ -58,7 +44,6 @@ export type CallLog = {
   interest_score?: number;
   next_action?: string;
   recording_url?: string;
-  raw_payload?: Record<string, unknown>;
   call_status: string;
   received_at?: string;
   duration_seconds?: number;
@@ -83,12 +68,15 @@ export type Property = {
   brochure_url?: string;
   price_sheet_url?: string;
   floor_plan_url?: string;
+  image_url?: string;
   kb_chunk_id?: string;
   availability_status?: string;
   total_units?: number;
   available_units?: number;
   possession_date?: string;
   rera_number?: string;
+  featured?: boolean;
+  is_published?: boolean;
   view_count?: number;
   created_at: string;
   updated_at: string;
@@ -117,6 +105,7 @@ export type NegotiationLog = {
   id: string;
   call_id: string;
   lead_phone: string;
+  property_id?: string;
   round_number?: number;
   buyer_offer: number;
   seller_price: number;
@@ -129,7 +118,6 @@ export type NegotiationLog = {
   created_at: string;
 };
 
-/** Legacy table – n8n may still write here; optional in newer schema */
 export type SiteVisit = {
   id: string;
   lead_phone: string;

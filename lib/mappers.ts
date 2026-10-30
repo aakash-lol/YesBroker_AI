@@ -1,4 +1,4 @@
-import type { CallAnalytics, CallLog, Lead, NegotiationLog, Property } from './supabase';
+import type { CallAnalytics, CallLog, Lead, NegotiationLog, Property } from './types';
 
 /** DB prices are stored in absolute INR (e.g. 8500000 = ₹85 Lakhs) */
 export function rupeesToLakhs(amount?: number | null): number {
@@ -43,6 +43,7 @@ export type UIProperty = {
   featured: boolean;
   status: string;
   investment_score: number;
+  image_url?: string;
 };
 
 export function mapProperty(row: Property): UIProperty {
@@ -79,7 +80,8 @@ export function mapProperty(row: Property): UIProperty {
     availability_status: row.availability_status,
     possession_date: row.possession_date,
     rera_number: row.rera_number,
-    featured: (row.view_count ?? 0) > 10 || row.availability_status === 'available',
+    featured: Boolean(row.featured),
+    image_url: row.image_url ?? undefined,
     status: row.availability_status || 'available',
     investment_score: Math.min(99, 70 + Math.min(29, Math.floor((row.view_count ?? 0) / 2))),
   };

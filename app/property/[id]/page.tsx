@@ -200,7 +200,7 @@ export default function PropertyPage({
     if (!property || !visitForm.name || !visitForm.phone || !visitForm.date)
       return;
     try {
-      await fetch("/api/site-visit", {
+      const res = await fetch("/api/site-visit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -213,8 +213,13 @@ export default function PropertyPage({
           notes: `Site visit for ${property.title}`,
         }),
       });
+      if (!res.ok) {
+        alert("Please check your phone number and date.");
+        return;
+      }
     } catch {
-      /* non-blocking */
+      alert("Could not book the visit. Please try again.");
+      return;
     }
     setVisitBooked(true);
   };
@@ -230,7 +235,7 @@ export default function PropertyPage({
   if (!property) {
     return (
       <div className="min-h-screen pt-20 flex flex-col items-center justify-center text-gray-500 gap-4">
-        <p>Property not found in Supabase.</p>
+        <p>Property not found.</p>
         <Link
           href="/marketplace"
           className="text-champagne-400 hover:underline"
@@ -250,7 +255,7 @@ export default function PropertyPage({
         "Flexible Payment Plan",
       ];
 
-  const imgSrc = getPropertyImage(property.title);
+  const imgSrc = property.image_url || getPropertyImage(property.title);
 
   return (
     <div className="min-h-screen pt-20 pb-20">
@@ -269,6 +274,7 @@ export default function PropertyPage({
           <>
             <Image
               src={imgSrc}
+              unoptimized={imgSrc.startsWith("http")}
               alt={property.title}
               fill
               className="object-cover"
@@ -333,14 +339,6 @@ export default function PropertyPage({
               <p className="text-gradient-gold font-display font-black text-2xl md:text-3xl leading-none">
                 {formatPrice(property.price, property.currency)}
               </p>
-              {property.minimum_price && (
-                <p
-                  className="text-xs mt-1.5"
-                  style={{ color: "var(--text-muted)" }}
-                >
-                  Floor: {formatPrice(property.minimum_price)}
-                </p>
-              )}
             </div>
           </div>
         </div>
@@ -544,7 +542,7 @@ export default function PropertyPage({
                     className="text-xs mt-1"
                     style={{ color: "var(--text-muted)" }}
                   >
-                    Saved to Supabase — n8n will send WhatsApp if configured
+                    We'll confirm your visit shortly.
                   </p>
                 </motion.div>
               ) : (

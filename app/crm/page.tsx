@@ -173,7 +173,7 @@ export default function CRMPage() {
             CRM Dashboard
           </h1>
           <p className="text-sm" style={{ color: "var(--text-secondary)" }}>
-            Live data from Supabase — populated by your n8n Real Estate Voice
+            Live data — populated by your n8n Real Estate Voice
             Agent Pro workflow.
           </p>
         </motion.div>
@@ -329,7 +329,7 @@ export default function CRMPage() {
             className="text-center py-16 text-sm"
             style={{ color: "var(--text-muted)" }}
           >
-            Loading CRM data from Supabase…
+            Loading CRM data…
           </div>
         ) : (
           <>

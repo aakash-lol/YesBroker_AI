@@ -16,7 +16,6 @@ const PRODUCT_LINKS = [
   { label: "Marketplace", href: "/marketplace" },
   { label: "Voice AI", href: "/voice-agent" },
   { label: "AI Search", href: "/search" },
-  { label: "Negotiation", href: "/negotiation" },
 ];
 
 const COMPANY_LINKS = [
