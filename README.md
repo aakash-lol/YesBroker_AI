@@ -181,6 +181,6 @@ real_estate_kb
 
 Properties are embedded with Gemini (`gemini-embedding-001`, 768 dimensions) and synced from Supabase into Qdrant. The sync script is kept out of this public repository, so set up the collection separately with the same embedding settings.
 
-## Author
+## Author :3
 
 **Aakash Tutlani** — [GitHub](https://github.com/aakash-lol) · [Portfolio](https://www.aakashtutlani.me/)
